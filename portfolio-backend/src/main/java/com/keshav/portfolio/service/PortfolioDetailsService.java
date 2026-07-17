@@ -1,0 +1,29 @@
+package com.keshav.portfolio.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import com.keshav.portfolio.dto.PortfolioDetailsDto;
+
+@Service
+@RequiredArgsConstructor
+public class PortfolioDetailsService {
+
+    private final ProfileSettingsService profileSettingsService;
+    private final SkillService skillService;
+    private final ProjectService projectService;
+    private final AchievementService achievementService;
+    private final CertificationService certificationService;
+    private final InternshipService internshipService;
+
+    public PortfolioDetailsDto getPortfolioDetails() {
+        return PortfolioDetailsDto.builder()
+                .profile(profileSettingsService.getSettings())
+                .skills(skillService.getAllSkills())
+                .projects(projectService.getAllProjects(0, 100, null, null).getContent())
+                .achievements(achievementService.getAll(0, 100).getContent())
+                .certifications(certificationService.getAll(0, 100).getContent())
+                .internships(internshipService.getAllInternships())
+                .build();
+    }
+}
