@@ -27,7 +27,6 @@ export default function CertificationsSection({ certifications: initialCerts, on
     if (initialCerts) {
       setCerts(initialCerts);
     } else {
-      // Fetch certs from Spring Boot backend (page size 100 for client search and filter)
       getCertifications({ page: 0, size: 100 })
         .then((res) => {
           if (res.data?.content) {

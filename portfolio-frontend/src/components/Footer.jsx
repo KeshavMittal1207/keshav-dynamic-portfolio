@@ -18,15 +18,15 @@ export default function Footer() {
             <p className="footer-desc text-[13.5px] text-brand-gray leading-[1.75] max-w-[280px] mb-5">
               A passionate Full Stack Developer building clean and efficient digital solutions with Java, Spring Boot, and React.js.
             </p>
-            <div className="footer-socials flex gap-2">
+            <div className="footer-socials flex gap-8">
               <a href="https://github.com/KeshavMittal1207" target="_blank" rel="noreferrer" className="fsoc font-bold">
-                GH
+                GitHub
               </a>
               <a href="https://www.linkedin.com/in/keshav-mittal-8b2b81284/" target="_blank" rel="noreferrer" className="fsoc font-bold">
-                in
+                LinkedIn
               </a>
               <a href="https://leetcode.com/u/keshav06/" target="_blank" rel="noreferrer" className="fsoc font-bold">
-                LC
+                Leetcode
               </a>
             </div>
           </div>
@@ -41,7 +41,6 @@ export default function Footer() {
               <button onClick={() => scrollTo('about')} className="text-left text-[13px] text-brand-gray hover:text-accent transition-colors">About</button>
               <button onClick={() => scrollTo('skills')} className="text-left text-[13px] text-brand-gray hover:text-accent transition-colors">Skills</button>
               <button onClick={() => scrollTo('projects')} className="text-left text-[13px] text-brand-gray hover:text-accent transition-colors">Projects</button>
-              <button onClick={() => scrollTo('achievements')} className="text-left text-[13px] text-brand-gray hover:text-accent transition-colors">Achievements</button>
             </div>
           </div>
 

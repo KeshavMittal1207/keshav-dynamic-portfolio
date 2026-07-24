@@ -12,7 +12,6 @@ public class PortfolioDetailsDto {
     private ProfileSettings profile;
     private List<Skill> skills;
     private List<Project> projects;
-    private List<Achievement> achievements;
     private List<Certification> certifications;
     private List<Internship> internships;
 }

@@ -35,16 +35,6 @@ CREATE TABLE IF NOT EXISTS projects (
     updated_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS achievements (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    achievement_date DATE,
-    image_url VARCHAR(255),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-);
-
 CREATE TABLE IF NOT EXISTS certifications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,

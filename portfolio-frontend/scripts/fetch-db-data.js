@@ -63,13 +63,6 @@ async function fetchPortfolioData() {
     );
     const projects = snakeToCamel(projectsRows);
 
-    // Fetch Achievements
-    console.log('Fetching achievements...');
-    const [achievementsRows] = await connection.execute(
-      'SELECT * FROM achievements ORDER BY id DESC'
-    );
-    const achievements = snakeToCamel(achievementsRows);
-
     // Fetch Certifications
     console.log('Fetching certifications...');
     const [certificationsRows] = await connection.execute(
@@ -89,7 +82,6 @@ async function fetchPortfolioData() {
       profile,
       skills,
       projects,
-      achievements,
       certifications,
       internships,
     };

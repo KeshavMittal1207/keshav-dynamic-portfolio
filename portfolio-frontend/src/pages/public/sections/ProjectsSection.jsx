@@ -16,7 +16,7 @@ export default function ProjectsSection({ projects: initialProjects, onPreview }
       setIsLoading(true);
       getProjects({ page: 0, size: 100 })
         .then((res) => {
-          if (res.data?.content && res.data.content.length > 0) {
+          if (res.data?.content) {
             setProjects(sortItemsByDate(res.data.content, 'createdDate'));
           }
         })

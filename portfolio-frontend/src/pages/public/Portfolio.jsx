@@ -5,7 +5,6 @@ import HeroSection from './sections/HeroSection';
 import AboutSection from './sections/AboutSection';
 import SkillsSection from './sections/SkillsSection';
 import ProjectsSection from './sections/ProjectsSection';
-import AchievementsSection from './sections/AchievementsSection';
 import CertificationsSection from './sections/CertificationsSection';
 import InternshipSection from './sections/InternshipSection';
 import ContactSection from './sections/ContactSection';
@@ -14,7 +13,6 @@ import {
   getProfileSettings,
   getSkills,
   getProjects,
-  getAchievements,
   getCertifications,
   getInternships
 } from '../../api/services';
@@ -43,16 +41,14 @@ export default function Portfolio() {
         getProfileSettings(),
         getSkills(),
         getProjects({ page: 0, size: 100 }),
-        getAchievements({ page: 0, size: 100 }),
         getCertifications({ page: 0, size: 100 }),
         getInternships()
-      ]).then(([profileRes, skillsRes, projectsRes, achievementsRes, certificationsRes, internshipsRes]) => {
+      ]).then(([profileRes, skillsRes, projectsRes, certificationsRes, internshipsRes]) => {
         return {
           data: {
             profile: profileRes.data,
             skills: skillsRes.data,
             projects: projectsRes.data?.content || [],
-            achievements: achievementsRes.data?.content || [],
             certifications: certificationsRes.data?.content || [],
             internships: internshipsRes.data || []
           }
@@ -160,9 +156,6 @@ export default function Portfolio() {
         <div className="w-full h-[1px] bg-brand-border/40 max-w-6xl mx-auto opacity-50"></div>
         
         <ProjectsSection projects={portfolioData?.projects} onPreview={setPreviewImage} />
-        <div className="w-full h-[1px] bg-brand-border/40 max-w-6xl mx-auto opacity-50"></div>
-        
-        <AchievementsSection achievements={portfolioData?.achievements} onPreview={setPreviewImage} />
         <div className="w-full h-[1px] bg-brand-border/40 max-w-6xl mx-auto opacity-50"></div>
         
         <CertificationsSection certifications={portfolioData?.certifications} onPreview={setPreviewImage} />

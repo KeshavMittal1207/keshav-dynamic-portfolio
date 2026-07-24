@@ -42,7 +42,7 @@ A dynamic, recruiter-ready full-stack portfolio site with a secure, JWT-authenti
 ## 📈 Key Features
 
 ### 🌟 Public Portfolio
-* **Dynamic Content Loading:** Entire page renders from backend database records (Profile Photo, Projects, Certifications, Achievements, Internships, Education).
+* **Dynamic Content Loading:** Entire page renders from backend database records (Profile Photo, Projects, Certifications, Internships, Education).
 * **Interactive Document Viewer:** Live modal overlay allows recruiters to view and download the PDF Resume inside the app window.
 * **Smart Search & Filters:** Search projects by titles or tech tags with fluid client-side pagination.
 * **Instant Contact Form:** Submits contact details, validates inputs, sends success alerts, and forwards the message directly to the administrator's email inbox using Gmail SMTP.
@@ -178,7 +178,6 @@ This boots a MySQL database, backend container, and frontend container automatic
 * `GET /api/public/portfolio` - Fetch the consolidated portfolio profile data.
 * `GET /api/projects` - Get paginated/searchable list of projects.
 * `GET /api/certifications` - Get paginated certifications.
-* `GET /api/achievements` - Get paginated achievements.
 * `GET /api/internships` - Get internships.
 * `GET /api/education` - Get education history.
 * `GET /api/skills` - Get skills list.

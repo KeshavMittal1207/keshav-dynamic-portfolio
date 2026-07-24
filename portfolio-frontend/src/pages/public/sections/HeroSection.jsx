@@ -40,16 +40,6 @@ export default function HeroSection({ profile: initialProfile, onPreview }) {
           <div className="relative group">
             {/* 3D Glowing Backdrop Layer */}
             <div className="photo-glow-backdrop"></div>
-            
-            {/* Floating Badge 1: Top-Left */}
-            <div className="float-badge fb-tl animate-float-1 select-none flex items-center gap-1.5 border border-brand-border/85 bg-brand-surface/90 backdrop-blur-md">
-              <span className="text-[12px] text-accent font-bold">★ B.Tech CSE</span>
-            </div>
-            
-            {/* Floating Badge 2: Bottom-Right */}
-            <div className="float-badge fb-br animate-float-2 select-none flex items-center gap-1.5 border border-brand-border/85 bg-brand-surface/90 backdrop-blur-md">
-              <span className="text-[12px] text-accent font-bold">Java / React</span>
-            </div>
 
             {/* Photo Card */}
             <div 
@@ -64,7 +54,7 @@ export default function HeroSection({ profile: initialProfile, onPreview }) {
               {photoSrc ? (
                 <img 
                   src={photoSrc} 
-                  alt="Kehsav Mittal" 
+                  alt="Keshav Mittal" 
                   className="w-full h-full object-cover" 
                   onError={() => setImageError(true)}
                 />
@@ -87,18 +77,18 @@ export default function HeroSection({ profile: initialProfile, onPreview }) {
           {/* Eyebrow Badge */}
           <div className="hero-eyebrow inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold px-4 py-1.5 rounded-full tracking-wider uppercase select-none">
             <div className="hero-dot w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></div>
-            Open to SDE Opportunities
+            Open to SDE &amp; Backend Roles
           </div>
           
           {/* Main Title */}
-          <h1 className="hero-h1 font-display text-[clamp(34px,5.2vw,54px)] font-bold leading-[1.1] tracking-[-2px] text-text-main">
+          <h1 className="hero-h1 font-display text-[clamp(32px,5vw,50px)] font-bold leading-[1.1] tracking-[-2px] text-text-main">
             Hi, I'm <span className="grad bg-clip-text text-transparent bg-gradient-to-r from-accent to-cyan font-bold">Keshav Mittal</span><br />
-            Java Full Stack Developer
+            Backend &amp; Agentic AI Engineer
           </h1>
           
           {/* Punchy Bio Description */}
-          <p className="hero-bio text-[15.5px] sm:text-[17px] text-brand-gray leading-[1.8] max-w-xl">
-            I am an enthusiastic Computer Science student and an aspiring Software Engineer. With a solid foundation in Java, Spring Boot, React, and SQL, I love building end-to-end applications and solving programming challenges. Eager to launch my career, learn from senior developers, and contribute to real-world codebases.
+          <p className="hero-bio text-[15px] sm:text-[16.5px] text-brand-gray leading-[1.8] max-w-xl">
+            Results-driven Backend &amp; Software Development Engineer specializing in high-concurrency Java microservices, event-driven architectures with Apache Kafka, and production Agentic AI workflows using LangGraph and LLMs. Experienced with Spring Boot 3, Spring Cloud, Redis caching, Python, FastAPI, Docker, and MySQL.
           </p>
           
           {/* Actions CTA buttons */}

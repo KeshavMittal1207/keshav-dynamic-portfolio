@@ -2,17 +2,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import AdminProjects from './modules/AdminProjects';
-import AdminAchievements from './modules/AdminAchievements';
 import AdminCertifications from './modules/AdminCertifications';
 import AdminInternships from './modules/AdminInternships';
 import AdminProfile from './modules/AdminProfile';
 import AdminMessages from './modules/AdminMessages';
-import { FiGrid, FiAward, FiFileText, FiLogOut, FiBriefcase, FiUser, FiMail, FiSun, FiMoon } from 'react-icons/fi';
+import { FiGrid, FiFileText, FiLogOut, FiBriefcase, FiUser, FiMail, FiSun, FiMoon } from 'react-icons/fi';
 
 const tabs = [
   { id: 'projects', label: 'Projects', icon: FiGrid },
   { id: 'internships', label: 'Internships', icon: FiBriefcase },
-  { id: 'achievements', label: 'Achievements', icon: FiAward },
   { id: 'certifications', label: 'Certifications', icon: FiFileText },
   { id: 'profile', label: 'Profile Settings', icon: FiUser },
   { id: 'messages', label: 'Messages', icon: FiMail },
@@ -102,7 +100,6 @@ export default function AdminDashboard() {
             >
               {activeTab === 'projects' && <AdminProjects />}
               {activeTab === 'internships' && <AdminInternships />}
-              {activeTab === 'achievements' && <AdminAchievements />}
               {activeTab === 'certifications' && <AdminCertifications />}
               {activeTab === 'profile' && <AdminProfile />}
               {activeTab === 'messages' && <AdminMessages />}

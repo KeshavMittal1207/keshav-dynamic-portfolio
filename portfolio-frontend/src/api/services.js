@@ -104,16 +104,14 @@ const refreshPortfolioCache = () => {
     API.get('/api/profile'),
     API.get('/api/skills'),
     API.get('/api/projects', { params: { page: 0, size: 100 } }),
-    API.get('/api/achievements', { params: { page: 0, size: 100 } }),
     API.get('/api/certifications', { params: { page: 0, size: 100 } }),
     API.get('/api/internships')
   ])
-  .then(([profileRes, skillsRes, projectsRes, achievementsRes, certificationsRes, internshipsRes]) => {
+  .then(([profileRes, skillsRes, projectsRes, certificationsRes, internshipsRes]) => {
     const data = {
       profile: profileRes.data,
       skills: skillsRes.data,
       projects: projectsRes.data?.content || [],
-      achievements: achievementsRes.data?.content || [],
       certifications: certificationsRes.data?.content || [],
       internships: internshipsRes.data || []
     };
@@ -143,17 +141,6 @@ export const uploadProjectImage = (file) => {
   const fd = new FormData();
   fd.append('file', file);
   return API.post('/api/projects/upload-image', fd);
-};
-
-// ACHIEVEMENTS
-export const getAchievements = (params) => API.get('/api/achievements', { params });
-export const createAchievement = withCacheRefresh((data) => API.post('/api/achievements', data));
-export const updateAchievement = withCacheRefresh((id, data) => API.put(`/api/achievements/${id}`, data));
-export const deleteAchievement = withCacheRefresh((id) => API.delete(`/api/achievements/${id}`));
-export const uploadAchievementImage = (file) => {
-  const fd = new FormData();
-  fd.append('file', file);
-  return API.post('/api/achievements/upload-image', fd);
 };
 
 // CERTIFICATIONS
