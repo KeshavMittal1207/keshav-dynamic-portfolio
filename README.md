@@ -1,195 +1,215 @@
-# RS Dynamic Full-Stack Portfolio Application
+# Keshav Mittal — Dynamic Full-Stack Portfolio Application
 
-A dynamic, recruiter-ready full-stack portfolio site with a secure, JWT-authenticated administrator dashboard to manage all content dynamically in real-time, eliminating code redeployments.
+[![Java 17](https://img.shields.io/badge/Java-17-007396?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
+[![Spring Boot 3.2.5](https://img.shields.io/badge/Spring_Boot-3.2.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Cloudinary](https://img.shields.io/badge/Cloudinary-Media_CDN-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)](https://cloudinary.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-Frontend-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Render](https://img.shields.io/badge/Render-Backend-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://render.com/)
+
+A dynamic full-stack portfolio application with a secure, JWT-authenticated administrator dashboard to manage all portfolio content (Projects, Certifications, Internships, Skills, Profile Photo, and Resume PDF) dynamically in real-time without requiring code redeployments.
 
 ---
 
-## 🚀 Live Demo & Hosting
-* **Live Application:** [keshav-mittal-dynamic-portfolio.vercel.app](https://keshav-mittal-dynamic-portfolio.vercel.app/)
-* **Backend API Host:** [portfolio-backend-2srb.onrender.com](https://portfolio-backend-2srb.onrender.com/api/projects)
-* **API Keep-Alive Strategy:** Backends hosted on Render's free tier enter "sleep mode" after 15 minutes of inactivity. To prevent a 50-second cold start lag for recruiters, a custom cron job runs every 10 minutes to ping the public `/api/projects` endpoint, keeping the container active and responsive at all times.
+## 🚀 Live Application & API Endpoints
+
+* **Live Application:** [https://keshav-dynamic-portfolio.vercel.app/](https://keshav-dynamic-portfolio.vercel.app/)
+* **API Keep-Alive Strategy:** Backends hosted on Render's free tier enter sleep mode after 15 minutes of inactivity. To prevent a cold-start latency lag for recruiters, an automated keep-alive strategy pings the public `/api/projects` endpoint to maintain active server readiness.
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Technology Stack
 
-### Frontend
-* **Core Framework:** React.js (v19)
-* **Build Engine:** Vite (v8)
-* **Routing:** React Router DOM (v7)
-* **Animations:** Framer Motion (v12)
-* **HTTP Client:** Axios (v1)
-* **Styling:** Tailwind CSS (v3) & Custom Glassmorphism CSS variables
-* **Icons:** React Icons
+### Frontend (`portfolio-frontend`)
+* **Core Framework:** React.js (v19.2)
+* **Build Engine:** Vite (v8.0)
+* **Routing:** React Router DOM (v7.15)
+* **Animations:** Framer Motion (v12.38)
+* **HTTP Client:** Axios (v1.16)
+* **Styling:** Tailwind CSS (v3.4) & Custom Glassmorphism CSS variables
+* **Icons:** React Icons (v5.6)
 
-### Backend
+### Backend (`portfolio-backend`)
 * **Core Framework:** Spring Boot (v3.2.5)
 * **Java Version:** Java 17
-* **Database Migration:** Flyway (v9)
-* **ORM:** Spring Data JPA (Hibernate)
-* **Security:** Spring Security (Stateless JWT token validation)
-* **Third-Party Integrations:** Cloudinary Java SDK (Media Streaming/Uploads), Java Mail Sender (Gmail SMTP)
+* **Database Connector:** MySQL Connector (`mysql-connector-j`)
+* **ORM & Persistence:** Spring Data JPA (Hibernate)
+* **Security:** Spring Security (Stateless JWT token validation with `jjwt 0.12.3`)
+* **Third-Party Services:** Cloudinary Java SDK (`1.36.0`) for media streaming, JavaMailSender (Gmail SMTP) for automated contact notifications
+* **Configuration:** `spring-dotenv` (v4.0.0) for `.env` management
 * **Build System:** Maven
 
-### Database & Hosting
-* **Production Database:** PostgreSQL (Hosted Serverless on Neon DB)
-* **Media & Documents CDN:** Cloudinary Cloud Registry (Profile Photo, Resume PDF, and Project Cover Images)
-* **Frontend Deployment:** Vercel
-* **Backend Deployment:** Render (Dockerized Web Service)
+### Database & Hosting Platform
+* **Database:** MySQL 8.0 Relational Database
+* **Media & Resume CDN:** Cloudinary Registry (Profile Avatar, PDF Resume, and Project Cover Images)
+* **Frontend Hosting:** Vercel
+* **Backend Hosting:** Render (Dockerized Web Service)
 
 ---
 
-## 📈 Key Features
+## 📈 Key Application Features
 
-### 🌟 Public Portfolio
-* **Dynamic Content Loading:** Entire page renders from backend database records (Profile Photo, Projects, Certifications, Internships, Education).
-* **Interactive Document Viewer:** Live modal overlay allows recruiters to view and download the PDF Resume inside the app window.
-* **Smart Search & Filters:** Search projects by titles or tech tags with fluid client-side pagination.
-* **Instant Contact Form:** Submits contact details, validates inputs, sends success alerts, and forwards the message directly to the administrator's email inbox using Gmail SMTP.
+### 🌟 Public Recruiter Portfolio
+* **Dynamic Content Hydration:** Renders all portfolio data dynamically from MySQL backend database records (Profile Settings, Projects, Certifications, Internships, Skills).
+* **Interactive Document Viewer:** Recruiter-friendly modal overlay allowing visitors to view and download the PDF Resume inside the browser.
+* **Search & Categorization:** Real-time client-side search filtering by project titles, descriptions, and technology tags with clean pagination support.
+* **Instant Contact Engine:** Input-validated contact form that saves incoming messages to the database and dispatches instant email notifications to the admin via Gmail SMTP.
 
-### 🛡 Admin Dashboard (`/admin/dashboard`)
-* **Secure Portal:** Protected by a custom client-side React Route guard and a backend Spring Security JWT validation filter.
-* **Live Stats Counters:** Shows counts of projects, certifications, experiences, and unread incoming contact messages.
-* **Profile Media Editor:** Instantly replace your display photo and resume PDF with automated remote Cloudinary catalog synchronization.
-* **Full CRUD Modules:** Create, update, and delete entries for all sections.
-* **Cloud File Uploads:** Upload files directly to Cloudinary CDN from custom dashboards.
-* **Home Redirection:** Quick-access home button next to the theme toggle to navigate back to the public homepage.
-
-### ⚡ Performance & Caching
-* **Stale-While-Revalidate Caching:** Frontend renders records instantly from `localStorage` on page load, making navigation immediate. It queries the backend API in parallel and updates the local storage cache if differences are found.
-* **Code Splitting:** Lazy-loaded Admin routes reduce the initial landing page bundle size, saving bandwidth for mobile visitors.
-* **Cloudinary Image Compression:** Appends formatting parameters (`q_auto,f_auto,w_800`) to image URLs dynamically, serving compressed WebP/AVIF images.
+### 🛡 Admin Control Panel (`/admin/dashboard`)
+* **JWT-Protected Portal:** Secured by a client-side React route guard and backend `JwtAuthFilter` validation.
+* **Real-Time Analytics Counters:** Visual statistics dashboard tracking counts of active projects, certifications, experiences, and incoming contact messages.
+* **Profile & Media Synchronization:** One-click replacement of profile avatar and PDF resume with automatic remote Cloudinary CDN upload.
+* **Full CRUD Management:** Create, edit, and delete entries across Projects, Certifications, Internships, and Skills modules.
+* **Message Management:** Read and delete incoming contact inquiries.
 
 ---
 
 ## 📂 Codebase Folder Architecture
 
 ```text
-├── portfolio/                      # SPRING BOOT BACKEND
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/keshav/portfolio/
-│   │   │   │   ├── config/         # Security configs, PasswordEncoder, CORS bean
-│   │   │   │   ├── controller/     # REST Controllers
-│   │   │   │   ├── dto/            # Data Transfer Objects with validation annotations
-│   │   │   │   ├── entity/         # JPA entities
-│   │   │   │   ├── exception/      # RestControllerAdvice and Global Exception Handlers
-│   │   │   │   ├── repository/     # Spring Data JPA repositories
-│   │   │   │   ├── security/       # JWT Auth Filters and Token Utilities
-│   │   │   │   ├── service/        # Business Logic Services
-│   │   │   │   └── util/           # HTML Sanitizer (XSS prevention)
-│   │   │   └── resources/
-│   │   │       ├── db/migration/   # Flyway V1 SQL schemas
-│   │   │       └── application.properties
-│   │   └── test/                   # MockMvc, JUnit, Mockito integrations
-│   ├── Dockerfile
-│   └── pom.xml
+dynamic-portfolio/
+├── portfolio-backend/              # Java 17 Spring Boot Backend Service
+│   ├── src/main/java/com/keshav/portfolio/
+│   │   ├── config/                 # SecurityConfig, CorsConfig, PasswordEncoder
+│   │   ├── controller/             # REST Controllers (Auth, Projects, Certifications, etc.)
+│   │   ├── dto/                    # Data Transfer Objects (LoginRequest, ProjectDto, etc.)
+│   │   ├── entity/                 # JPA Entities (Project, Certification, User, ProfileSettings)
+│   │   ├── exception/              # GlobalExceptionHandler & ResourceNotFoundException
+│   │   ├── repository/             # Spring Data JPA Repositories
+│   │   ├── security/               # JwtAuthFilter, JwtTokenProvider, CustomUserDetailsService
+│   │   ├── service/                # Business Logic Services (ProjectService, AuthService, CloudinaryService)
+│   │   └── util/                   # HTMLSanitizer (XSS Protection)
+│   ├── .env                        # Local & Production Environment Variables
+│   ├── application.properties      # Spring Boot Properties Setup
+│   ├── Dockerfile                  # Backend Container Build Spec
+│   └── pom.xml                     # Maven Dependencies Setup
 │
-├── rashmi-portfolio-frontend/      # REACT FRONTEND
-│   ├── src/
-│   │   ├── api/                    # Axios config and API service routes
-│   │   ├── components/             # Reusable UI widgets (Skeletons, Alert toasts, Form inputs)
-│   │   ├── pages/
-│   │   │   ├── admin/              # Dashboard pages & modules
-│   │   │   └── public/             # Public landing pages & sections
-│   │   ├── App.jsx                 # Routes configuration (lazy loaded)
-│   │   └── index.css               # Global glassmorphism variables & custom animations
-│   ├── Dockerfile
-│   └── vercel.json
-│
-└── docker-compose.yml              # Local Multi-Container Orchestrator
+└── portfolio-frontend/             # React 19 Single Page Application (Vite)
+    ├── src/
+    │   ├── api/                    # Axios Configuration & API Service Routes
+    │   ├── components/             # Reusable UI Widgets (Navbar, Footer, Modals, Toast Alerts)
+    │   ├── pages/                  # Public Portfolio Landing & Protected Admin Dashboard
+    │   ├── App.jsx                 # Lazy-loaded Router & Route Guards
+    │   └── index.css               # Glassmorphism Theme & Custom Styling
+    ├── package.json                # Dependencies Specs (React 19, Vite 8, Tailwind)
+    └── vercel.json                 # Vercel SPA Rewrite Rules
 ```
 
 ---
 
-## 🔑 Environment Variables Config
+## 🔑 Environment Variables Setup (`portfolio-backend/.env`)
 
-### Backend Setup (`portfolio/src/main/resources/application.properties`)
-```properties
-# Server
-server.port=8080
+Create a `.env` file inside the `portfolio-backend/` root directory:
 
-# Database
-spring.datasource.url=jdbc:postgresql://<host>/neondb?sslmode=require
-spring.datasource.username=<username>
-spring.datasource.password=<password>
+```env
+# Database Credentials (MySQL)
+DB_URL=jdbc:mysql://localhost:3306/keshav_portfolio_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+DB_USERNAME=root
+DB_PASSWORD=your_mysql_password
 
-# JWT Secrets
-jwt.secret=<strong-signing-secret-key-hs256>
-jwt.expiration=86400000
+# JWT Security Configuration
+JWT_SECRET=your_super_secret_signing_key_minimum_256_bits_long
 
-# Cloudinary CDN credentials
-cloudinary.cloud-name=<cloud-name>
-cloudinary.api-key=<api-key>
-cloudinary.api-secret=<api-secret>
+# Cloudinary Media CDN Configuration
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-# Email Settings (Gmail SMTP App Password)
-spring.mail.username=<your-email@gmail.com>
-spring.mail.password=<your-gmail-16-digit-app-password>
+# CORS Configuration
+ALLOWED_ORIGINS=http://localhost:5173
 
-# Allowed Origins (CORS)
-ALLOWED_ORIGINS=http://localhost:5173,https://your-vercel-domain.vercel.app
+# JavaMailSender (Gmail SMTP Configuration)
+SPRING_MAIL_USERNAME=keshavmittal1207@gmail.com
+SPRING_MAIL_PASSWORD=your_gmail_app_password
+
+# Default Admin Account Initialization
+ADMIN_DEFAULT_USERNAME=Keshav
+ADMIN_DEFAULT_PASSWORD=YourAdminPassword123
+ADMIN_DEFAULT_EMAIL=keshavmittal1207@gmail.com
 ```
 
 ---
 
-## 🛠 Installation & Local Running
+## 🛠 Local Setup & Installation Guide
 
-### Prerequisite Configuration
-Ensure Java 17, Node.js (v18+), Maven, and Docker are installed.
+### Prerequisites
+* **JDK 17** installed and configured in `PATH`.
+* **Node.js 18+** & **npm**.
+* **MySQL 8.0** database running locally.
 
-### Option A: Local Running (Separate Processes)
+---
 
-#### 1. Setup Backend
+### Step 1: Run Backend API Service
 ```bash
-cd portfolio
-# Package and build backend jar
+cd portfolio-backend
+
+# Package and build JAR file
 ./mvnw clean package -DskipTests
-# Run Spring Boot app
+
+# Run Spring Boot Application
 ./mvnw spring-boot:run
 ```
-The backend server starts on `http://localhost:8080`.
-
-#### 2. Setup Frontend
-```bash
-cd rashmi-portfolio-frontend
-# Install dependencies
-npm install
-# Run development server
-npm run dev
-```
-The frontend starts on `http://localhost:5173`.
+*Backend server will start on `http://localhost:8080`.*
 
 ---
 
-### Option B: Local Running (Docker Compose)
-Run the entire stack in isolated Docker containers:
+### Step 2: Run Frontend Application
 ```bash
-docker-compose up --build
+cd portfolio-frontend
+
+# Install dependencies
+npm install
+
+# Start Vite development server
+npm run dev
 ```
-This boots a MySQL database, backend container, and frontend container automatically configured to sync.
+*Frontend application will start on `http://localhost:5173`.*
 
 ---
 
 ## 📡 API Routing Reference
 
-### Public API routes (No Auth required)
-* `POST /api/auth/login` - Validate credentials and return JWT bearer token.
-* `GET /api/public/portfolio` - Fetch the consolidated portfolio profile data.
-* `GET /api/projects` - Get paginated/searchable list of projects.
-* `GET /api/certifications` - Get paginated certifications.
-* `GET /api/internships` - Get internships.
-* `GET /api/education` - Get education history.
-* `GET /api/skills` - Get skills list.
-* `GET /api/profile` - Get display avatar and PDF resume path.
-* `POST /api/contact` - Submit contact message.
+### 🌐 Public Endpoints (No Authentication Required)
+- `POST /api/auth/login` — Validate admin credentials and return JWT bearer token.
+- `GET /api/public/portfolio` — Fetch consolidated portfolio details in a single request.
+- `GET /api/projects` — Fetch paginated and searchable projects (`page`, `size`, `sort`, `search`).
+- `GET /api/projects/{id}` — Fetch details for a specific project.
+- `GET /api/certifications` — Fetch list of certifications.
+- `GET /api/internships` — Fetch list of internships/experiences.
+- `GET /api/skills` — Fetch skills catalog.
+- `GET /api/profile` — Fetch active profile settings (photo URL, resume PDF URL).
+- `POST /api/contact` — Submit a contact message and send an email notification to the administrator.
 
-### Protected Admin Routes (JWT Bearer Token Required)
-* `POST /api/projects` - Create a new project.
-* `PUT /api/projects/{id}` - Update a project.
-* `DELETE /api/projects/{id}` - Delete a project.
-* `POST /api/projects/upload-image` - Stream a project cover image directly to Cloudinary.
-* `POST /api/profile/update` - Update resume/photo config settings.
-* `POST /api/profile/upload` - Stream resume/photo to Cloudinary.
-* `GET /api/contact` - Get all contact messages.
-* `DELETE /api/contact/{id}` - Delete contact message.
+### 🛡 Protected Admin Endpoints (JWT Bearer Token Required)
+- `POST /api/projects` — Create a new project entry.
+- `PUT /api/projects/{id}` — Update an existing project.
+- `DELETE /api/projects/{id}` — Delete a project.
+- `POST /api/projects/upload-image` — Upload a project cover image directly to Cloudinary.
+- `POST /api/certifications` — Create a certification entry.
+- `PUT /api/certifications/{id}` — Update a certification entry.
+- `DELETE /api/certifications/{id}` — Delete a certification entry.
+- `POST /api/internships` — Create an internship entry.
+- `PUT /api/internships/{id}` — Update an internship entry.
+- `DELETE /api/internships/{id}` — Delete an internship entry.
+- `POST /api/skills` — Create a skill entry.
+- `PUT /api/skills/{id}` — Update a skill entry.
+- `DELETE /api/skills/{id}` — Delete a skill entry.
+- `POST /api/profile/update` — Update profile settings (bio, titles, resume/photo links).
+- `POST /api/profile/upload` — Upload a profile photo or resume PDF directly to Cloudinary.
+- `GET /api/contact` — View all incoming contact messages.
+- `DELETE /api/contact/{id}` — Delete a contact message.
+
+---
+
+## 💻 Developer & Contact
+
+- **Developer:** Keshav Mittal
+- **GitHub:** [KeshavMittal1207](https://github.com/KeshavMittal1207)
+- **LinkedIn:** [Keshav Mittal](https://linkedin.com/in/keshav-mittal-8b2b81284/)
+- **Email:** `keshavmittal1207@gmail.com`
+
+---
+
+## 📄 License
+This project is open-source under the [MIT License](LICENSE).
