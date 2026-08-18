@@ -15,7 +15,6 @@ public class ProjectDto {
     @URL(message = "GitHub Link must be a valid URL")
     private String githubLink;
 
-    @URL(message = "Live Link must be a valid URL")
     private String liveLink;
 
     @URL(message = "Image URL must be a valid URL")
