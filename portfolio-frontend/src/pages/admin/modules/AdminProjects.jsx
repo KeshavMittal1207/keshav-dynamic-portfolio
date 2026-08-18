@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { getProjects, createProject, updateProject, deleteProject, uploadProjectImage, sortItemsByDate } from '../../../api/services';
+import { getProjects, createProject, updateProject, deleteProject, uploadProjectImage, sortItemsByDate, parseDemoLinks } from '../../../api/services';
 import CustomAlert from '../../../components/CustomAlert';
 import FormInput from '../../../components/FormInput';
 import { FaPlus, FaTrash, FaEdit, FaGithub, FaLink } from 'react-icons/fa';
@@ -155,12 +155,13 @@ export default function AdminProjects() {
 
             <div className="md:col-span-2">
               <FormInput
-                label="Detailed Description"
+                label="Detailed Description (Shown in Public Project Overview Modal)"
                 id="detailedDescription"
                 textarea
+                rows={5}
                 value={form.detailedDescription}
                 onChange={(e) => setForm({ ...form, detailedDescription: e.target.value })}
-                placeholder="Talk about the problem, solution, and features..."
+                placeholder="Detailed breakdown of the problem, architecture, key features, and highlights..."
               />
             </div>
 
@@ -181,14 +182,29 @@ export default function AdminProjects() {
               placeholder="https://github.com/..."
             />
 
-            <FormInput
-              label="Live Demo Link"
-              id="liveLink"
-              type="url"
-              value={form.liveLink}
-              onChange={(e) => setForm({ ...form, liveLink: e.target.value })}
-              placeholder="https://..."
-            />
+            <div className="md:col-span-2 space-y-2">
+              <FormInput
+                label="Live Demo Link(s)"
+                id="liveLink"
+                type="text"
+                value={form.liveLink}
+                onChange={(e) => setForm({ ...form, liveLink: e.target.value })}
+                placeholder="e.g. https://app.com OR Live App: https://app.com, Video: https://youtube.com/..."
+              />
+              <p className="text-[12px] text-brand-muted">
+                💡 Tip: Add multiple links separated by commas or with custom labels (e.g. <code className="text-accent font-semibold">Live App: https://..., Video Demo: https://...</code>).
+              </p>
+              {form.liveLink && (
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <span className="text-[11px] font-bold text-brand-muted uppercase tracking-wider">Detected Buttons:</span>
+                  {parseDemoLinks(form.liveLink).map((demo, idx) => (
+                    <span key={idx} className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-lg bg-accent/10 border border-brand-border font-semibold text-accent">
+                      <FaLink size={10} /> {demo.label}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <div className="space-y-4">
               <label className="text-sm font-bold text-brand-gray ml-1">Project Preview Image</label>
@@ -266,17 +282,17 @@ export default function AdminProjects() {
               </div>
 
               {(p.githubLink || p.liveLink) && (
-                <div className="flex gap-3 pt-2 text-brand-muted text-xs border-t border-brand-border/40">
+                <div className="flex flex-wrap gap-2.5 pt-2 text-brand-muted text-xs border-t border-brand-border/40">
                   {p.githubLink && (
                     <a href={p.githubLink} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-brand-primary">
                       <FaGithub size={12} /> GitHub
                     </a>
                   )}
-                  {p.liveLink && (
-                    <a href={p.liveLink} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-brand-primary">
-                      <FaLink size={12} /> Live Demo
+                  {parseDemoLinks(p.liveLink).map((demo, idx) => (
+                    <a key={idx} href={demo.url} target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-brand-primary font-medium text-accent">
+                      <FaLink size={12} /> {demo.label}
                     </a>
-                  )}
+                  ))}
                 </div>
               )}
             </div>
@@ -313,9 +329,17 @@ export default function AdminProjects() {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex gap-3 text-brand-muted">
-                      {p.githubLink && <FaGithub />}
-                      {p.liveLink && <FaLink />}
+                    <div className="flex flex-wrap gap-2 text-brand-muted">
+                      {p.githubLink && (
+                        <a href={p.githubLink} target="_blank" rel="noreferrer" className="hover:text-brand-primary" title="GitHub">
+                          <FaGithub size={14} />
+                        </a>
+                      )}
+                      {parseDemoLinks(p.liveLink).map((demo, idx) => (
+                        <a key={idx} href={demo.url} target="_blank" rel="noreferrer" className="hover:text-accent font-medium text-xs flex items-center gap-1" title={demo.label}>
+                          <FaLink size={12} /> {demo.label}
+                        </a>
+                      ))}
                     </div>
                   </td>
                   <td className="px-6 py-4 text-right">

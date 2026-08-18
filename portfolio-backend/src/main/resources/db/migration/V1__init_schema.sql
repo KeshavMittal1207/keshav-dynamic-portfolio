@@ -61,17 +61,6 @@ CREATE TABLE IF NOT EXISTS internships (
     updated_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS education (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    degree VARCHAR(255) NOT NULL,
-    institution VARCHAR(255) NOT NULL,
-    score VARCHAR(255),
-    duration VARCHAR(255),
-    icon_type VARCHAR(255),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-);
-
 CREATE TABLE IF NOT EXISTS contact_messages (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,

@@ -14,6 +14,68 @@ export const resolveUrl = (url) => {
   return `${baseUrl}/uploads/${url}`;
 };
 
+// DEMO LINKS PARSER (Supports single URL, comma/newline separated, labeled 'Label: URL', or JSON array)
+export const parseDemoLinks = (raw) => {
+  if (!raw || typeof raw !== 'string') return [];
+  const trimmed = raw.trim();
+  if (!trimmed) return [];
+
+  // 1. JSON array parsing
+  if ((trimmed.startsWith('[') && trimmed.endsWith(']')) || (trimmed.startsWith('{') && trimmed.endsWith('}'))) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) {
+        return parsed.map((item, idx) => ({
+          label: item.label || item.title || item.name || `Live Demo ${idx + 1}`,
+          url: item.url || item.link || (typeof item === 'string' ? item : '')
+        })).filter((item) => Boolean(item.url));
+      }
+    } catch {
+      // Fall through to regex delimiter parsing
+    }
+  }
+
+  // 2. Delimiter parsing (newlines, commas, semicolons, pipes)
+  // Split on delimiters that are not inside quotes
+  const parts = trimmed.split(/[\n\r]+|[;,|](?=(?:[^"]*"[^"]*")*[^"]*$)/).map((s) => s.trim()).filter(Boolean);
+  const results = [];
+
+  parts.forEach((part, index) => {
+    // Check for "Label: http..." or "Label - http..." or "Label = http..."
+    const match = part.match(/^([^:]+?)\s*[:=-]\s*(https?:\/\/.+)$/i);
+    if (match) {
+      results.push({
+        label: match[1].trim(),
+        url: match[2].trim()
+      });
+    } else {
+      const urlMatch = part.match(/(https?:\/\/[^\s]+)/i);
+      if (urlMatch) {
+        const url = urlMatch[1].trim();
+        let label = 'Live Demo';
+        const lowerUrl = url.toLowerCase();
+        if (lowerUrl.includes('youtube.com') || lowerUrl.includes('youtu.be') || lowerUrl.includes('loom.com') || lowerUrl.includes('vimeo.com')) {
+          label = 'Video Demo';
+        } else if (lowerUrl.includes('swagger') || lowerUrl.includes('/api') || lowerUrl.includes('postman.com')) {
+          label = 'API Docs';
+        } else if (lowerUrl.includes('drive.google.com') || lowerUrl.includes('dropbox.com')) {
+          label = 'Demo Assets';
+        } else if (parts.length > 1) {
+          label = `Live Demo ${index + 1}`;
+        }
+        results.push({ label, url });
+      } else if (part.startsWith('http://') || part.startsWith('https://')) {
+        results.push({
+          label: parts.length > 1 ? `Live Demo ${index + 1}` : 'Live Demo',
+          url: part
+        });
+      }
+    }
+  });
+
+  return results.length > 0 ? results : [{ label: 'Live Demo', url: trimmed }];
+};
+
 // DATE SORTING UTILITY (Descending, e.g. Present first)
 export const sortItemsByDate = (items, dateField = 'createdDate') => {
   if (!Array.isArray(items)) return [];
